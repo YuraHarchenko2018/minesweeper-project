@@ -1,0 +1,104 @@
+body {
+    /* background: black;
+    color: white; */
+}
+
+.controllerWrapper {
+    display: flex;
+    justify-content: space-evenly;
+}
+.gameWrapper {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 20px auto;
+    width: auto;
+    height: auto;
+}
+.field {
+    border-radius: 4px;
+    width: 630px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.cell {
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    border: 1px solid gray;
+    background: #c3c0c0;
+    width: 40px;
+    height: 30px;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 20px;
+    color: black;
+}
+.openedCell {
+	background: #ffffff;
+}
+#dangerous {
+    background: #cc0000;
+}
+#flagged {
+    background: #65a4e6;
+}
+#mine-flag {
+    font-size: 40px;
+    color: #4f93da;
+    cursor: pointer;
+    display: none;
+}
+#mine-bullseye {
+    font-size: 40px;
+    color: #e20505;
+    cursor: pointer;
+}
+.timer {
+    font-size: 24px;
+}
+
+
+
+
+.difficultyWrapper {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 40px 0px;
+}
+.difficultyModal {
+    border: 1px solid #939393;
+    border-radius: 4px;
+    width: 500px;
+    background: #f0f0f0;
+    padding: 60px;
+}
+.difficultyModalTitle {
+    text-align: center;
+    font-size: 28px;
+}
+.difficultyOptions {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 40px 0px;
+}
+.difficultyOption {
+    width: 100px;
+    height: 20px;
+    border-radius: 4px;
+    text-align: center;
+    padding: 40px 0px;
+    cursor: pointer;
+    font-size: 18px;
+}
+#easyOption {
+    border: 1px solid green;
+    background: #a4dba4;
+}
+#middleOption {
+    border: 1px solid yellow;
+    background: #fefec5;
+}
+#hardOption {
+    border: 1px solid red;
+    background: #ff9c9c;
+}
+

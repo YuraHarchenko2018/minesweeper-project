@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+    <div class="controllerWrapper">
+        <div class="timer">
+            <span id="timer-counter">0</span> second
+        </div>
+        <div>
+            <i class="fa fa-flag" id="mine-flag" aria-hidden="true"></i>
+            <i class="fa fa-bullseye" id="mine-bullseye" aria-hidden="true"></i>
+        </div>
+    </div>
+
+    <div class="difficultyWrapper">
+        <div class="difficultyModal">
+            <p class="difficultyModalTitle">Select game difficulty</p>
+            <div class="difficultyOptions">
+                <div id="easyOption" class="difficultyOption"><b>Easy</b></div>
+                <div id="middleOption" class="difficultyOption"><b>Middle</b></div>
+                <div id="hardOption" class="difficultyOption"><b>Hard</b></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="gameWrapper">
+        <div class="field"></div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
