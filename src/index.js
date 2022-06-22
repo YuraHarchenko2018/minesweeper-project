@@ -16,19 +16,19 @@ class Game {
         this.easyLevelState = {
             maxInRow: 9,
             maxInColumn: 9,
-            approximateDangerousCellsAmount: 10, 
+            dangerousCellsAmount: 10, 
         }
         
         this.middleLevelState = {
             maxInRow: 16,
             maxInColumn: 16,
-            approximateDangerousCellsAmount: 40, 
+            dangerousCellsAmount: 40, 
         }
         
         this.hardLevelState = {
             maxInRow: 30,
             maxInColumn: 16,
-            approximateDangerousCellsAmount: 99, 
+            dangerousCellsAmount: 99, 
         }
         
         this.countingSequence = [
@@ -56,6 +56,7 @@ class Game {
         this.mineBullseye = document.querySelector('#mine-bullseye')
         
         this.timerCounterElement = document.querySelector("#timer-counter")
+        this.bombCounterElement = document.querySelector("#bomb-counter")
 
         this.difficultyWrapperElement = document.querySelector(".difficultyWrapper")
 
@@ -106,7 +107,7 @@ class Game {
         let RenderInstance = new Render()
             RenderInstance.renderCells(this.state)
         
-        this.state.amountOfBomb = RenderInstance.amountOfBomb
+        this.state.amountOfBomb = this.state.dangerousCellsAmount
         this.state.cells = RenderInstance.cellsState
     }
 
@@ -251,6 +252,7 @@ class Game {
             this.state.timerCounter = 'go'
             this.timerCounterInterval = setInterval(() => {
                 this.timerCounterElement.innerText = Number(this.timerCounterElement.innerText) + 1
+                this.bombCounterElement.innerText = this.state.amountOfBomb
             }, 1000)
         }
 

@@ -6,7 +6,6 @@ class Render {
         this.field = document.querySelector('.field')
         this.baseWidthCell = 42
 
-        this.amountOfBomb = 0
         this.cellsState = []
     }
 
@@ -18,19 +17,15 @@ class Render {
     renderCells(state) {
         this.setUpGameFieldWidth(state)
 
-        let localCellsCount = state.cellsCount
-        let approximateBombAmount = state.approximateDangerousCellsAmount
+        let bombGridArray = this.generateBombGridArray(state)
+        let stepCounter = 0
 
         for (let j = 0; j < state.maxInColumn; j++) {
             let midArray = []
 
             for (let i = 0; i < state.maxInRow; i++) {
-                let percentageOfDangerousCells = approximateBombAmount/localCellsCount * 100
-                let isDangerous = (Helper.getRandomInt(0, 100) <= percentageOfDangerousCells && approximateBombAmount > 0) ? true : false
-        
-                midArray.push({ "isDangerous": isDangerous, "isOpen": false })
-
-                isDangerous ? approximateBombAmount-- : localCellsCount--
+                let isDangerous = bombGridArray[stepCounter]
+                    midArray.push({ "isDangerous": isDangerous, "isOpen": false })
 
                 // create element
                 let cell = document.createElement('div')
@@ -40,8 +35,9 @@ class Render {
 
                 if(isDangerous) {
                     // cell.style.background = "red"
-                    this.amountOfBomb++
                 }
+
+                stepCounter++
 
                 this.field.appendChild(cell)
             }
@@ -50,18 +46,25 @@ class Render {
             this.cellsState.push(midArray)
         }
 
-        // if (state.approximateDangerousCellsAmount != this.amountOfBomb) {
-        //     this.field.innerHTML = ''
-        //     this.cellsState = []
-        //     this.amountOfBomb = 0
-        //     this.renderCells(state)
-        // }
-
         console.dir(this.cellsState)
     }
 
-    determineIsDangerStatus() {
-        
+    generateBombGridArray(state) {
+        let cellsAmount = state.maxInColumn * state.maxInRow
+        let bombGridArray = []
+
+        for (let i = 0; i < cellsAmount; i++) {
+            if (i < state.dangerousCellsAmount) {
+                bombGridArray.push(true)
+            } else {
+                bombGridArray.push(false)
+            }
+            
+        }
+
+        bombGridArray = Helper.shuffle(bombGridArray)
+
+        return bombGridArray
     }
 }
 
