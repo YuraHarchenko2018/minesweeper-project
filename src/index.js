@@ -16,7 +16,7 @@ class Game {
         this.easyLevelState = {
             maxInRow: 9,
             maxInColumn: 9,
-            dangerousCellsAmount: 1, 
+            dangerousCellsAmount: 10, 
         }
         
         this.middleLevelState = {

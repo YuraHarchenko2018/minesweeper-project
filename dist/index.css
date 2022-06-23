@@ -112,11 +112,13 @@ body {
     padding: 40px 0px;
 }
 .difficultyModal {
-    border: 1px solid #939393;
     border-radius: 4px;
     width: 500px;
-    background: #f0f0f0;
     padding: 60px;
+    color: white;
+    background: linear-gradient(-45deg, #cc52ee, #bc3ce7, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 10s ease infinite;
 }
 .difficultyModalTitle {
     text-align: center;
@@ -135,17 +137,15 @@ body {
     padding: 40px 0px;
     cursor: pointer;
     font-size: 18px;
+    color: white;
 }
 #easyOption {
-    border: 1px solid green;
-    background: #a4dba4;
+    background: linear-gradient(25deg, #23a6d5, #23d5ab);
 }
 #middleOption {
-    border: 1px solid yellow;
-    background: #fefec5;
+    background: linear-gradient(0deg, #e6bf50, #fffd95);
 }
 #hardOption {
-    border: 1px solid red;
-    background: #ff9c9c;
+    background: linear-gradient(-25deg, #e73c7e, #ee7752);
 }
 
