@@ -49,6 +49,8 @@ class Game {
         this.handleEasyOptionBtn()
         this.handleMiddleOptionBtn()
         this.handleHardOptionBtn()
+
+        this.handleRestartGameBtn()
     }
 
     initElementSelectors() {
@@ -59,10 +61,25 @@ class Game {
         this.bombCounterElement = document.querySelector("#bomb-counter")
 
         this.difficultyWrapperElement = document.querySelector(".difficultyWrapper")
+        this.gameResultsElement = document.querySelector(".game-results")
+        this.fieldElement = document.querySelector(".field")
 
         this.easyOptionBtn = document.querySelector("#easyOption")
         this.middleOptionBtn = document.querySelector("#middleOption")
         this.hardOptionBtn = document.querySelector("#hardOption")
+
+        this.gameResultsTitle = document.querySelector(".game-results-title")
+        this.restartGameBtn = document.querySelector("#restart-game-btn")
+    }
+
+    setDisplayStatusForElement(element, status = 'none') {
+        element.style.display = status
+    }
+
+    handleRestartGameBtn() {
+        this.restartGameBtn.onclick = () => {
+            location.reload()
+        }
     }
 
     handleEasyOptionBtn() {
@@ -176,8 +193,8 @@ class Game {
                             e.target.classList.add('fa-bomb')
 
                             clearInterval(this.timerCounterInterval)
-                            setTimeout(()=>{alert("you loose")}, 300)
-                            // location.reload()
+                            this.gameResultsTitle.innerText = 'you loose'
+                            this.setDisplayStatusForElement(this.gameResultsElement, 'block')
                         }
                         
                         // for common
@@ -191,7 +208,9 @@ class Game {
                         // END
                         if(this.state.amountOfBomb <= 0 && this.state.involvedСells == this.state.cellsCount) {
                             clearInterval(this.timerCounterInterval)
-                            setTimeout(()=>{alert("you win")}, 100)
+                            this.bombCounterElement.innerText = this.state.amountOfBomb
+                            this.gameResultsTitle.innerText = 'you win'
+                            this.setDisplayStatusForElement(this.gameResultsElement, 'block')
                         }
 
                     }
@@ -239,7 +258,9 @@ class Game {
                     // END
                     if(this.state.amountOfBomb <= 0 && this.state.involvedСells == this.state.cellsCount) {
                         clearInterval(this.timerCounterInterval)
-                        setTimeout(()=>{alert("you win")}, 100)
+                        this.bombCounterElement.innerText = this.state.amountOfBomb
+                        this.gameResultsTitle.innerText = 'you win'
+                        this.setDisplayStatusForElement(this.gameResultsElement, 'block')
                     }
 
                 }

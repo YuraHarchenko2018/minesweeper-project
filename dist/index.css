@@ -20,6 +20,13 @@ body {
     display: flex;
     flex-wrap: wrap;
 }
+.game-results {
+    border: 1px solid black;
+    width: 600px;
+    height: 300px;
+    border-radius: 10px;
+    display: none;
+}
 .cell {
     transition: all 0.3s ease;
     border-radius: 4px;
@@ -57,6 +64,27 @@ body {
 }
 .bomb-counter {
     font-size: 24px;
+}
+.game-results-title {
+    font-size: 24px;
+    text-align: center;
+    padding: 40px;
+}
+.restart-btn-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+.restart-game-btn {
+    border: 1px solid black;
+    height: 25px;
+    width: 100px;
+    padding: 5px 10px;
+    font-size: 20px;
+    border-radius: 5px;
+    background: #e6e6e6;
+    cursor: pointer;
+    text-align: center;
 }
 
 
