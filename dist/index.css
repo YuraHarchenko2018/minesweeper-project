@@ -31,17 +31,6 @@ body {
     background-size: 400% 400%;
     animation: gradient 1s ease infinite;
 }
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
 .cell {
     transition: all 0.3s ease;
     border-radius: 4px;
@@ -116,7 +105,7 @@ body {
     width: 500px;
     padding: 60px;
     color: white;
-    background: linear-gradient(-45deg, #cc52ee, #bc3ce7, #23a6d5, #23d5ab);
+    background: linear-gradient(-45deg, #f2e3f7, #d9f5e1, #d8eef5, #f7d8d8);
     background-size: 400% 400%;
     animation: gradient 10s ease infinite;
 }
@@ -149,3 +138,16 @@ body {
     background: linear-gradient(-25deg, #e73c7e, #ee7752);
 }
 
+
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}

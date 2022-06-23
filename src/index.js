@@ -12,6 +12,8 @@ class Game {
             openedCells: [],
             cells: []
         }
+
+        this.selectedLevelState = {}
         
         this.easyLevelState = {
             maxInRow: 9,
@@ -61,13 +63,13 @@ class Game {
         this.bombCounterElement = document.querySelector("#bomb-counter")
 
         this.difficultyWrapperElement = document.querySelector(".difficultyWrapper")
-        this.gameResultsElement = document.querySelector(".game-results")
         this.fieldElement = document.querySelector(".field")
 
         this.easyOptionBtn = document.querySelector("#easyOption")
         this.middleOptionBtn = document.querySelector("#middleOption")
         this.hardOptionBtn = document.querySelector("#hardOption")
 
+        this.gameResultsElement = document.querySelector(".game-results")
         this.gameResultsTitle = document.querySelector(".game-results-title")
         this.restartGameBtn = document.querySelector("#restart-game-btn")
     }
@@ -78,13 +80,30 @@ class Game {
 
     handleRestartGameBtn() {
         this.restartGameBtn.onclick = () => {
-            location.reload()
+            this.state = {
+                gameStyle: 'demining',
+                timerCounter: 'ready',
+                amountOfBomb: 0,
+                involvedСells: 0,
+                cellsCount: 0,
+                openedCells: [],
+                cells: []
+            }
+
+            this.completeState(this.selectedLevelState)
+
+            this.fieldElement.innerHTML = ""
+            this.timerCounterElement.innerText = 0
+            this.setDisplayStatusForElement(this.gameResultsElement, 'none')
+
+            this.render()
         }
     }
 
     handleEasyOptionBtn() {
         this.easyOptionBtn.onclick = (e) => {
-            this.completeState(this.easyLevelState)
+            this.selectedLevelState = this.easyLevelState
+            this.completeState(this.selectedLevelState)
             this.difficultyWrapperElement.style.display = 'none'
             this.initGame()
         }
@@ -92,7 +111,8 @@ class Game {
 
     handleMiddleOptionBtn() {
         this.middleOptionBtn.onclick = (e) => {
-            this.completeState(this.middleLevelState)
+            this.selectedLevelState = this.middleLevelState
+            this.completeState(this.selectedLevelState)
             this.difficultyWrapperElement.style.display = 'none'
             this.initGame()
         }
@@ -100,7 +120,8 @@ class Game {
 
     handleHardOptionBtn() {
         this.hardOptionBtn.onclick = (e) => {
-            this.completeState(this.hardLevelState)
+            this.selectedLevelState = this.hardLevelState
+            this.completeState(this.selectedLevelState)
             this.difficultyWrapperElement.style.display = 'none'
             this.initGame()
         }
