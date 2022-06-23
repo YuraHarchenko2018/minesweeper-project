@@ -21,11 +21,26 @@ body {
     flex-wrap: wrap;
 }
 .game-results {
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width: 600px;
     height: 300px;
     border-radius: 10px;
     display: none;
+
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 1s ease infinite;
+}
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 .cell {
     transition: all 0.3s ease;
@@ -66,9 +81,10 @@ body {
     font-size: 24px;
 }
 .game-results-title {
-    font-size: 24px;
+    font-size: 26px;
     text-align: center;
     padding: 40px;
+    color: white;
 }
 .restart-btn-wrapper {
     display: flex;
@@ -76,7 +92,7 @@ body {
     margin-top: 40px;
 }
 .restart-game-btn {
-    border: 1px solid black;
+    /* border: 1px solid black; */
     height: 25px;
     width: 100px;
     padding: 5px 10px;

@@ -16,7 +16,7 @@ class Game {
         this.easyLevelState = {
             maxInRow: 9,
             maxInColumn: 9,
-            dangerousCellsAmount: 10, 
+            dangerousCellsAmount: 1, 
         }
         
         this.middleLevelState = {
@@ -195,6 +195,7 @@ class Game {
                             clearInterval(this.timerCounterInterval)
                             this.gameResultsTitle.innerText = 'you loose'
                             this.setDisplayStatusForElement(this.gameResultsElement, 'block')
+                            this.gameResultsElement.style.background = "linear-gradient(-45deg, #ee7752, #e73c7e, #e73c7e, #e73c3c)"
                         }
                         
                         // for common
@@ -211,6 +212,7 @@ class Game {
                             this.bombCounterElement.innerText = this.state.amountOfBomb
                             this.gameResultsTitle.innerText = 'you win'
                             this.setDisplayStatusForElement(this.gameResultsElement, 'block')
+                            this.gameResultsElement.style.background = "linear-gradient(-45deg, #234cd5, #23a6d5, #23a6d5, #23d5ab)"
                         }
 
                     }
@@ -261,6 +263,7 @@ class Game {
                         this.bombCounterElement.innerText = this.state.amountOfBomb
                         this.gameResultsTitle.innerText = 'you win'
                         this.setDisplayStatusForElement(this.gameResultsElement, 'block')
+                        this.gameResultsElement.style.background = "linear-gradient(-45deg, #234cd5, #23a6d5, #23a6d5, #23d5ab)"
                     }
 
                 }
