@@ -23,7 +23,7 @@ class Helper {
         }
       
         return array;
-      }
+    }
 }
 
 export default Helper

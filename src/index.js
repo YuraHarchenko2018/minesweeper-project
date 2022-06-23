@@ -1,4 +1,5 @@
 import Render from './render'
+import Helper from './helper'
 
 class Game {
 
@@ -43,6 +44,8 @@ class Game {
             [ 1, 0 ],
             [ 1, 1 ],
         ]
+
+        this.time = 0
     }
 
     main() {
@@ -77,10 +80,6 @@ class Game {
         
     }
 
-    setDisplayStatusForElement(element, status = 'none') {
-        element.style.display = status
-    }
-
     handleBackToMenuBtn() {
         this.backToMenuBtn.onclick = () => {
             location.reload()
@@ -100,11 +99,7 @@ class Game {
             }
 
             this.completeState(this.selectedLevelState)
-
-            this.fieldElement.innerHTML = ""
-            this.timerCounterElement.innerText = 0
-            this.bombCounterElement.innerText = this.state.dangerousCellsAmount
-            this.setDisplayStatusForElement(this.gameResultsElement, 'none')
+            this.time = 0
 
             this.render()
         }
@@ -114,7 +109,6 @@ class Game {
         this.easyOptionBtn.onclick = (e) => {
             this.selectedLevelState = this.easyLevelState
             this.completeState(this.selectedLevelState)
-            this.difficultyWrapperElement.style.display = 'none'
             this.initGame()
         }
     }
@@ -123,7 +117,6 @@ class Game {
         this.middleOptionBtn.onclick = (e) => {
             this.selectedLevelState = this.middleLevelState
             this.completeState(this.selectedLevelState)
-            this.difficultyWrapperElement.style.display = 'none'
             this.initGame()
         }
     }
@@ -132,7 +125,6 @@ class Game {
         this.hardOptionBtn.onclick = (e) => {
             this.selectedLevelState = this.hardLevelState
             this.completeState(this.selectedLevelState)
-            this.difficultyWrapperElement.style.display = 'none'
             this.initGame()
         }
     }
@@ -152,6 +144,17 @@ class Game {
     }
 
     render() {
+        // hide other windows
+        Render.setDisplayStatusForElement(this.difficultyWrapperElement, 'none')
+        Render.setDisplayStatusForElement(this.gameResultsElement, 'none')
+
+        // set up info bar data
+        Render.setContent(this.bombCounterElement, this.state.dangerousCellsAmount)
+        Render.setContent(this.timerCounterElement, this.time)
+
+        // clear cells
+        Render.removeContent(this.fieldElement)
+
         let RenderInstance = new Render()
             RenderInstance.renderCells(this.state)
         
@@ -224,8 +227,8 @@ class Game {
                             e.target.classList.add('fa-bomb')
 
                             clearInterval(this.timerCounterInterval)
-                            this.gameResultsTitle.innerText = 'you loose'
-                            this.setDisplayStatusForElement(this.gameResultsElement, 'block')
+                            Render.setContent(this.gameResultsTitle, `You loose in ${this.time} seconds`)
+                            Render.setDisplayStatusForElement(this.gameResultsElement, 'block')
                             this.gameResultsElement.style.background = "linear-gradient(-45deg, #ee7752, #e73c7e, #e73c7e, #e73c3c)"
                         }
                         
@@ -240,9 +243,8 @@ class Game {
                         // END
                         if(this.state.amountOfBomb <= 0 && this.state.involvedСells == this.state.cellsCount) {
                             clearInterval(this.timerCounterInterval)
-                            this.bombCounterElement.innerText = this.state.amountOfBomb
-                            this.gameResultsTitle.innerText = 'you win'
-                            this.setDisplayStatusForElement(this.gameResultsElement, 'block')
+                            Render.setContent(this.gameResultsTitle, `You win in ${this.time} seconds`)
+                            Render.setDisplayStatusForElement(this.gameResultsElement, 'block')
                             this.gameResultsElement.style.background = "linear-gradient(-45deg, #234cd5, #23a6d5, #23a6d5, #23d5ab)"
                         }
 
@@ -260,8 +262,8 @@ class Game {
                         e.target.id = ''
                         e.target.classList.remove("fa");
                         e.target.classList.remove("fa-flag");
+
                         this.state.involvedСells--
-                        console.dir(this.state.involvedСells)
 
                         if(this.state.cells[cellRowNumber][cellPositionNumber].isDangerous) {
                             this.state.amountOfBomb++
@@ -281,9 +283,12 @@ class Game {
                             e.target.id = "flagged"
                             e.target.classList.add("fa")
                             e.target.classList.add("fa-flag")
+
                             this.state.involvedСells++
                         }
                     }
+
+                    Render.setContent(this.bombCounterElement, this.state.amountOfBomb)
 
                     console.dir(this.state.involvedСells)
                     console.dir("amountOfBomb - " + this.state.amountOfBomb)
@@ -291,9 +296,8 @@ class Game {
                     // END
                     if(this.state.amountOfBomb <= 0 && this.state.involvedСells == this.state.cellsCount) {
                         clearInterval(this.timerCounterInterval)
-                        this.bombCounterElement.innerText = this.state.amountOfBomb
-                        this.gameResultsTitle.innerText = 'you win'
-                        this.setDisplayStatusForElement(this.gameResultsElement, 'block')
+                        Render.setContent(this.gameResultsTitle, `You win in ${this.time} seconds`)
+                        Render.setDisplayStatusForElement(this.gameResultsElement, 'block')
                         this.gameResultsElement.style.background = "linear-gradient(-45deg, #234cd5, #23a6d5, #23a6d5, #23d5ab)"
                     }
 
@@ -306,16 +310,17 @@ class Game {
         if (this.state.timerCounter == 'ready') {
             this.state.timerCounter = 'go'
             this.timerCounterInterval = setInterval(() => {
-                this.timerCounterElement.innerText = Number(this.timerCounterElement.innerText) + 1
-                this.bombCounterElement.innerText = this.state.amountOfBomb
+                this.time = this.time + 1
+                Render.setContent(this.timerCounterElement, this.time)
             }, 1000)
         }
 
         if (!this.state.openedCells.includes(String(cellRowNumber) + "-" +  String(cellPositionNumber))) {
             this.state.involvedСells++
-            console.dir(this.state.involvedСells)
             this.state.openedCells.push(String(cellRowNumber) + "-" +  String(cellPositionNumber))
         } else {
+            // for miss-choosen flag set (need remove amoun, its hust style)
+            target.style.background = 'white'
             return;
         }
 

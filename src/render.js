@@ -34,7 +34,7 @@ class Render {
                     cell.dataset.positionNumber = i
 
                 if(isDangerous) {
-                    // cell.style.background = "red"
+                    cell.style.background = "red"
                 }
 
                 stepCounter++
@@ -65,6 +65,18 @@ class Render {
         bombGridArray = Helper.shuffle(bombGridArray)
 
         return bombGridArray
+    }
+
+    static removeContent(element) {
+        element.innerHTML = ""
+    }
+
+    static setContent(element, value = "") {
+        element.innerText = value
+    }
+
+    static setDisplayStatusForElement(element, status = 'none') {
+        element.style.display = status
     }
 }
 
