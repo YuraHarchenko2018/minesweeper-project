@@ -75,15 +75,26 @@ body {
     padding: 40px;
     color: white;
 }
-.restart-btn-wrapper {
+.game-results-btn-wrapper {
     display: flex;
     justify-content: center;
-    margin-top: 40px;
+    margin-top: 30px;
 }
 .restart-game-btn {
     /* border: 1px solid black; */
     height: 25px;
     width: 100px;
+    padding: 5px 10px;
+    font-size: 20px;
+    border-radius: 5px;
+    background: #e6e6e6;
+    cursor: pointer;
+    text-align: center;
+}
+.menu-btn {
+    /* border: 1px solid black; */
+    height: 25px;
+    width: 120px;
     padding: 5px 10px;
     font-size: 20px;
     border-radius: 5px;

@@ -53,6 +53,7 @@ class Game {
         this.handleHardOptionBtn()
 
         this.handleRestartGameBtn()
+        this.handleBackToMenuBtn()
     }
 
     initElementSelectors() {
@@ -72,10 +73,18 @@ class Game {
         this.gameResultsElement = document.querySelector(".game-results")
         this.gameResultsTitle = document.querySelector(".game-results-title")
         this.restartGameBtn = document.querySelector("#restart-game-btn")
+        this.backToMenuBtn = document.querySelector("#menu-btn")
+        
     }
 
     setDisplayStatusForElement(element, status = 'none') {
         element.style.display = status
+    }
+
+    handleBackToMenuBtn() {
+        this.backToMenuBtn.onclick = () => {
+            location.reload()
+        }
     }
 
     handleRestartGameBtn() {
@@ -94,6 +103,7 @@ class Game {
 
             this.fieldElement.innerHTML = ""
             this.timerCounterElement.innerText = 0
+            this.bombCounterElement.innerText = this.state.dangerousCellsAmount
             this.setDisplayStatusForElement(this.gameResultsElement, 'none')
 
             this.render()
