@@ -1,10 +1,13 @@
 body {
-    /* background: black;
-    color: white; */
+    /* background: linear-gradient(-45deg, #8a8a8a, #8d8d8d, #9f9f9f, #949494);  */
+    background: linear-gradient(-45deg, rgb(221, 221, 221), rgb(236, 236, 236), rgb(225, 225, 225), rgb(232, 232, 232)); 
+    background-size: 400% 400%;
+    animation: gradient 6s ease infinite;
+    font-family: 'Anek Latin', sans-serif;
 }
 
 .controllerWrapper {
-    display: flex;
+    display: none;
     justify-content: space-evenly;
 }
 .gameWrapper {
@@ -123,8 +126,8 @@ body {
     border-radius: 4px;
     width: 500px;
     padding: 60px;
-    color: white;
-    background: linear-gradient(-45deg, #f2e3f7, #d9f5e1, #d8eef5, #f7d8d8);
+    color: black;
+    background: linear-gradient(-45deg, #dad0dc, #cedcd2, #d3dde0, #ddcfcf); 
     background-size: 400% 400%;
     animation: gradient 10s ease infinite;
 }

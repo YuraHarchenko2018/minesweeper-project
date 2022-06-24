@@ -56,6 +56,7 @@ class Game {
         this.timerCounterElement = document.querySelector("#timer-counter")
         this.bombCounterElement = document.querySelector("#bomb-counter")
 
+        this.controllerWrapperElement = document.querySelector(".controllerWrapper")
         this.difficultyWrapperElement = document.querySelector(".difficultyWrapper")
         this.fieldElement = document.querySelector(".field")
 
@@ -137,10 +138,11 @@ class Game {
         // hide other windows
         Render.setDisplayStatusForElement(this.difficultyWrapperElement, 'none')
         Render.setDisplayStatusForElement(this.gameResultsElement, 'none')
+        Render.setDisplayStatusForElement(this.controllerWrapperElement, 'flex')
 
         // set up info bar data
         Render.setContent(this.bombCounterElement, this.state.dangerousCellsAmount)
-        Render.setContent(this.timerCounterElement, this.time)
+        Render.setContent(this.timerCounterElement, '')
 
         // clear cells
         Render.removeContent(this.fieldElement)
@@ -211,7 +213,11 @@ class Game {
                     this.state.timerCounter = 'go'
                     this.timerCounterInterval = setInterval(() => {
                         this.time = this.time + 1
-                        Render.setContent(this.timerCounterElement, this.time)
+
+                        let minutes = Math.floor(this.time / 60);
+                        let seconds = this.time % 60
+                        let timeFormated = (minutes) ? `${minutes} Minutes and ${seconds} Seconds` : `${seconds} Seconds`
+                        Render.setContent(this.timerCounterElement, timeFormated)
                     }, 1000)
 
                     // setup: dangers cels
@@ -313,8 +319,13 @@ class Game {
         target.classList.add('fa-bomb')
 
         clearInterval(this.timerCounterInterval)
-        Render.setContent(this.gameResultsTitle, `You loose in ${this.time} seconds`)
+
+        let bombAmount = this.state.amountOfBomb
+        let looseTitle = `You lose in ${this.time} seconds ${bombAmount} ${bombAmount > 1 ? 'bombs' : 'bomb'} remain`
+        Render.setContent(this.gameResultsTitle, looseTitle)
+
         Render.setDisplayStatusForElement(this.gameResultsElement, 'block')
+        Render.setDisplayStatusForElement(this.controllerWrapperElement, 'none')
         this.gameResultsElement.style.background = "linear-gradient(-45deg, #ee7752, #e73c7e, #e73c7e, #e73c3c)"
     }
 
