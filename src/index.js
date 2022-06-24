@@ -35,6 +35,7 @@ class Game {
         }
 
         this.time = 0
+        this.flagAmount = 0
     }
 
     main() {
@@ -148,6 +149,7 @@ class Game {
             RenderInstance.renderCells(this.state)
         
         this.state.amountOfBomb = this.state.dangerousCellsAmount
+        this.flagAmount = this.state.dangerousCellsAmount
         this.state.cells = RenderInstance.cellsState
     }
 
@@ -161,11 +163,11 @@ class Game {
         this.mineBullseye.onclick =  this.mineBullseyeOnClick.bind(this)
 
         document.body.onkeydown = (e) => {
-            if (e.code == "MetaLeft") this.mineBullseyeOnClick()
+            if (e.code == "MetaLeft" || e.code == "ControlLeft") this.mineBullseyeOnClick()
         }
 
         document.body.onkeyup = (e) => {
-            if (e.code == "MetaLeft") this.mineFlagOnClick()
+            if (e.code == "MetaLeft" || e.code == "ControlLeft") this.mineFlagOnClick()
 
             if (e.code == "Space") {
                 if (this.state.gameStyle == 'demining') {
@@ -263,6 +265,7 @@ class Game {
                         e.target.classList.remove("fa-flag");
 
                         this.state.involvedСells--
+                        this.flagAmount++
 
                         if(this.state.cells[cellRowNumber][cellPositionNumber].isDangerous) {
                             this.state.amountOfBomb++
@@ -271,23 +274,28 @@ class Game {
                         }
 
                     } else {
+                        // if flags is not over
+                        if (this.flagAmount > 0) {
 
-                        if(this.state.cells[cellRowNumber][cellPositionNumber].isDangerous) {
-                            this.state.amountOfBomb--
-                        } else {
-                            this.state.amountOfBomb++
-                        }
-
-                        if(this.state.amountOfBomb >= 0 && !e.target.classList.contains('openedCell')) {
-                            e.target.id = "flagged"
-                            e.target.classList.add("fa")
-                            e.target.classList.add("fa-flag")
-
-                            this.state.involvedСells++
+                            if(this.state.cells[cellRowNumber][cellPositionNumber].isDangerous) {
+                                this.state.amountOfBomb--
+                            } else {
+                                this.state.amountOfBomb++
+                            }
+    
+                            if(this.state.amountOfBomb >= 0 && !e.target.classList.contains('openedCell')) {
+                                e.target.id = "flagged"
+                                e.target.classList.add("fa")
+                                e.target.classList.add("fa-flag")
+    
+                                this.state.involvedСells++
+                                this.flagAmount--
+                            }
+                            
                         }
                     }
 
-                    Render.setContent(this.bombCounterElement, this.state.amountOfBomb)
+                    Render.setContent(this.bombCounterElement, this.flagAmount)
 
                     // END
                     if(this.state.amountOfBomb <= 0 && this.state.involvedСells == this.state.cellsCount) {
