@@ -14,11 +14,19 @@ body {
     width: auto;
     height: auto;
 }
+.gameResultsWrapper {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 20px auto;
+    width: auto;
+    height: auto;
+}
 .field {
     border-radius: 4px;
     width: 630px;
     display: flex;
     flex-wrap: wrap;
+    position: absolute;
 }
 .game-results {
     /* border: 1px solid black; */

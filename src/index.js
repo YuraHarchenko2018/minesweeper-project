@@ -1,5 +1,4 @@
 import Render from './render'
-import Helper from './helper'
 
 class Game {
 
@@ -222,14 +221,7 @@ class Game {
 
                         // for mines | END | Loose
                         if(this.state.cells[cellRowNumber][cellPositionNumber].isDangerous) {
-                            e.target.style.background = "#cc0000"
-                            e.target.classList.add('fa')
-                            e.target.classList.add('fa-bomb')
-
-                            clearInterval(this.timerCounterInterval)
-                            Render.setContent(this.gameResultsTitle, `You loose in ${this.time} seconds`)
-                            Render.setDisplayStatusForElement(this.gameResultsElement, 'block')
-                            this.gameResultsElement.style.background = "linear-gradient(-45deg, #ee7752, #e73c7e, #e73c7e, #e73c3c)"
+                            this.bombCellClickProcessing(e.target)
                         }
                         
                         // for common
@@ -237,15 +229,9 @@ class Game {
                             this.commonCellClickProcessing(e.target, cellRowNumber, cellPositionNumber)
                         }
 
-                        console.dir(this.state.involvedСells)
-                        console.dir("amountOfBomb - " + this.state.amountOfBomb)
-
                         // END
                         if(this.state.amountOfBomb <= 0 && this.state.involvedСells == this.state.cellsCount) {
-                            clearInterval(this.timerCounterInterval)
-                            Render.setContent(this.gameResultsTitle, `You win in ${this.time} seconds`)
-                            Render.setDisplayStatusForElement(this.gameResultsElement, 'block')
-                            this.gameResultsElement.style.background = "linear-gradient(-45deg, #234cd5, #23a6d5, #23a6d5, #23d5ab)"
+                            this.winCondifionProcessing()
                         }
 
                     }
@@ -290,20 +276,32 @@ class Game {
 
                     Render.setContent(this.bombCounterElement, this.state.amountOfBomb)
 
-                    console.dir(this.state.involvedСells)
-                    console.dir("amountOfBomb - " + this.state.amountOfBomb)
-
                     // END
                     if(this.state.amountOfBomb <= 0 && this.state.involvedСells == this.state.cellsCount) {
-                        clearInterval(this.timerCounterInterval)
-                        Render.setContent(this.gameResultsTitle, `You win in ${this.time} seconds`)
-                        Render.setDisplayStatusForElement(this.gameResultsElement, 'block')
-                        this.gameResultsElement.style.background = "linear-gradient(-45deg, #234cd5, #23a6d5, #23a6d5, #23d5ab)"
+                        this.winCondifionProcessing()
                     }
 
                 }
             }
         })
+    }
+
+    bombCellClickProcessing(target) {
+        target.style.background = "#cc0000"
+        target.classList.add('fa')
+        target.classList.add('fa-bomb')
+
+        clearInterval(this.timerCounterInterval)
+        Render.setContent(this.gameResultsTitle, `You loose in ${this.time} seconds`)
+        Render.setDisplayStatusForElement(this.gameResultsElement, 'block')
+        this.gameResultsElement.style.background = "linear-gradient(-45deg, #ee7752, #e73c7e, #e73c7e, #e73c3c)"
+    }
+
+    winCondifionProcessing() {
+        clearInterval(this.timerCounterInterval)
+        Render.setContent(this.gameResultsTitle, `You win in ${this.time} seconds`)
+        Render.setDisplayStatusForElement(this.gameResultsElement, 'block')
+        this.gameResultsElement.style.background = "linear-gradient(-45deg, #234cd5, #23a6d5, #23a6d5, #23d5ab)"
     }
 
     commonCellClickProcessing(target, cellRowNumber, cellPositionNumber) {

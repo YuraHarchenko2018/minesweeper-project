@@ -24,7 +24,7 @@ class Render {
             let midArray = []
 
             for (let i = 0; i < state.maxInRow; i++) {
-                let isDangerous = bombGridArray[stepCounter]
+                let isDangerous = bombGridArray[stepCounter] // false
                     midArray.push({ "isDangerous": isDangerous, "isOpen": false })
 
                 // create element
@@ -34,7 +34,7 @@ class Render {
                     cell.dataset.positionNumber = i
 
                 if(isDangerous) {
-                    cell.style.background = "red"
+                    // cell.style.background = "red"
                 }
 
                 stepCounter++
