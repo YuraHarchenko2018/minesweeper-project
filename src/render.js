@@ -17,27 +17,17 @@ class Render {
     renderCells(state) {
         this.setUpGameFieldWidth(state)
 
-        let bombGridArray = this.generateBombGridArray(state)
-        let stepCounter = 0
-
         for (let j = 0; j < state.maxInColumn; j++) {
             let midArray = []
 
             for (let i = 0; i < state.maxInRow; i++) {
-                let isDangerous = bombGridArray[stepCounter] // false
-                    midArray.push({ "isDangerous": isDangerous, "isOpen": false })
+                midArray.push({ "isDangerous": false, "isOpen": false })
 
                 // create element
                 let cell = document.createElement('div')
                     cell.className = 'cell'
                     cell.dataset.rowNumber = j
                     cell.dataset.positionNumber = i
-
-                if(isDangerous) {
-                    // cell.style.background = "red"
-                }
-
-                stepCounter++
 
                 this.field.appendChild(cell)
             }
@@ -49,7 +39,7 @@ class Render {
         console.dir(this.cellsState)
     }
 
-    generateBombGridArray(state) {
+    static generateBombGridAsocArray(state) {
         let cellsAmount = state.maxInColumn * state.maxInRow
         let bombGridArray = []
 
@@ -63,6 +53,7 @@ class Render {
         }
 
         bombGridArray = Helper.shuffle(bombGridArray)
+        bombGridArray = Helper.chunk_inefficient(bombGridArray, state.maxInRow)
 
         return bombGridArray
     }

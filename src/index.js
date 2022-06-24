@@ -1,3 +1,4 @@
+import Helper from './helper'
 import Render from './render'
 
 class Game {
@@ -32,17 +33,6 @@ class Game {
             maxInColumn: 16,
             dangerousCellsAmount: 99, 
         }
-        
-        this.countingSequence = [
-            [ -1, -1 ],
-            [ -1, 0],
-            [ -1, 1 ],
-            [ 0, -1 ],
-            [ 0, 1 ],
-            [ 1, -1 ],
-            [ 1, 0 ],
-            [ 1, 1 ],
-        ]
 
         this.time = 0
     }
@@ -213,6 +203,29 @@ class Game {
                 let cellRowNumber = Number(e.target.dataset.rowNumber)
                 let cellPositionNumber = Number(e.target.dataset.positionNumber)
 
+                // first click
+                if (this.state.timerCounter == 'ready') {
+                    // setup: timer
+                    this.state.timerCounter = 'go'
+                    this.timerCounterInterval = setInterval(() => {
+                        this.time = this.time + 1
+                        Render.setContent(this.timerCounterElement, this.time)
+                    }, 1000)
+
+                    // setup: dangers cels
+                    let bombGridAsocArray = Helper.getSafeBombArray(this.state, cellRowNumber, cellPositionNumber)
+
+                    for (let i = 0; i < this.state.cells.length; i++) {
+                        const subArray = this.state.cells[i];
+
+                        for (let j = 0; j < subArray.length; j++) {
+                            const cell = subArray[j];
+                                  cell.isDangerous = bombGridAsocArray[i][j]
+                            this.state.cells[i][j] = cell
+                        }
+                    }
+                }
+
                 // demining logic
                 if(this.state.gameStyle === "demining") {
 
@@ -305,14 +318,6 @@ class Game {
     }
 
     commonCellClickProcessing(target, cellRowNumber, cellPositionNumber) {
-        if (this.state.timerCounter == 'ready') {
-            this.state.timerCounter = 'go'
-            this.timerCounterInterval = setInterval(() => {
-                this.time = this.time + 1
-                Render.setContent(this.timerCounterElement, this.time)
-            }, 1000)
-        }
-
         if (!this.state.openedCells.includes(String(cellRowNumber) + "-" +  String(cellPositionNumber))) {
             this.state.involvedСells++
             this.state.openedCells.push(String(cellRowNumber) + "-" +  String(cellPositionNumber))
@@ -341,9 +346,9 @@ class Game {
         let finalScore = 0
 
         // realization for counting nearby cell score
-        for (let i = 0; i < this.countingSequence.length; i++) {
-            const rowShiftNumber = cellRowNumber + this.countingSequence[i][0];
-            const positionShiftNumber = cellPositionNumber + this.countingSequence[i][1];
+        for (let i = 0; i < Helper.countingSequence.length; i++) {
+            const rowShiftNumber = cellRowNumber + Helper.countingSequence[i][0];
+            const positionShiftNumber = cellPositionNumber + Helper.countingSequence[i][1];
 
             let midValue = (typeof this.state.cells[rowShiftNumber] == 'undefined') ? 0 : (this.state.cells[rowShiftNumber][positionShiftNumber]?.isDangerous ? 1 : 0)
 
@@ -363,9 +368,9 @@ class Game {
 
     // commonCellClickProcessing
     revealNeighboars(finalScore, cellRowNumber, cellPositionNumber) {
-        for (let i = 0; i < this.countingSequence.length; i++) {
-            const rowShiftNumber = cellRowNumber + this.countingSequence[i][0];
-            const positionShiftNumber = cellPositionNumber + this.countingSequence[i][1];
+        for (let i = 0; i < Helper.countingSequence.length; i++) {
+            const rowShiftNumber = cellRowNumber + Helper.countingSequence[i][0];
+            const positionShiftNumber = cellPositionNumber + Helper.countingSequence[i][1];
 
             let HTMLelement = document.querySelector(`div[data-row-number="${rowShiftNumber}"][data-position-number="${positionShiftNumber}"]`)
 
