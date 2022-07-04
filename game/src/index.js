@@ -36,6 +36,7 @@ class Game {
 
         this.time = 0
         this.flagAmount = 0
+        this.flagedCellsArray = []
     }
 
     main() {
@@ -152,6 +153,7 @@ class Game {
         
         this.state.amountOfBomb = this.state.dangerousCellsAmount
         this.flagAmount = this.state.dangerousCellsAmount
+        this.flagedCellsArray = []
         this.state.cells = RenderInstance.cellsState
     }
 
@@ -272,6 +274,7 @@ class Game {
 
                         this.state.involvedСells--
                         this.flagAmount++
+                        this.flagedCellsArray.push(String(cellRowNumber) + "-" + String(cellPositionNumber))
 
                         if(this.state.cells[cellRowNumber][cellPositionNumber].isDangerous) {
                             this.state.amountOfBomb++
@@ -296,6 +299,7 @@ class Game {
     
                                 this.state.involvedСells++
                                 this.flagAmount--
+                                this.flagedCellsArray.push(String(cellRowNumber) + "-" + String(cellPositionNumber))
                             }
                             
                         }
@@ -356,8 +360,13 @@ class Game {
         // }
         
         if (finalScore === 0) {
-            this.revealNeighboars(finalScore, cellRowNumber, cellPositionNumber)
+            this.revealNeighboars(cellRowNumber, cellPositionNumber)
         }
+
+        // for simplify a game process
+        // if (finalScore === 1) {
+        //     this.revealNeighboarsForASingle(cellRowNumber, cellPositionNumber)
+        // }
     }
 
     // commonCellClickProcessing
@@ -386,7 +395,7 @@ class Game {
     }
 
     // commonCellClickProcessing
-    revealNeighboars(finalScore, cellRowNumber, cellPositionNumber) {
+    revealNeighboars(cellRowNumber, cellPositionNumber) {
         for (let i = 0; i < Helper.countingSequence.length; i++) {
             const rowShiftNumber = cellRowNumber + Helper.countingSequence[i][0];
             const positionShiftNumber = cellPositionNumber + Helper.countingSequence[i][1];
@@ -395,6 +404,39 @@ class Game {
 
             if(HTMLelement != null) {
                 this.commonCellClickProcessing(HTMLelement, rowShiftNumber, positionShiftNumber)
+            }
+        }
+    }
+
+    revealNeighboarsForASingle(cellRowNumber, cellPositionNumber) {
+        let isHaveBombnearby = false
+
+        // if have marked bomb nearby
+        for (let i = 0; i < Helper.countingSequence.length; i++) {
+            const rowShiftNumber = cellRowNumber + Helper.countingSequence[i][0];
+            const positionShiftNumber = cellPositionNumber + Helper.countingSequence[i][1];
+
+            if(this.flagedCellsArray.includes(String(rowShiftNumber) + "-" +  String(positionShiftNumber))) {
+                isHaveBombnearby = true
+            }
+
+        }
+
+        if (isHaveBombnearby) {
+            for (let i = 0; i < Helper.countingSequence.length; i++) {
+                const rowShiftNumber = cellRowNumber + Helper.countingSequence[i][0];
+                const positionShiftNumber = cellPositionNumber + Helper.countingSequence[i][1];
+    
+
+                // let test2424 = (typeof this.state.cells[rowShiftNumber] == 'undefined') ? 0 : (this.state.cells[rowShiftNumber][positionShiftNumber]?.isDangerous ? 1 : 0)
+                // if(test2424) {
+                if(!this.flagedCellsArray.includes(String(rowShiftNumber) + "-" +  String(positionShiftNumber))) {
+                    let HTMLelement = document.querySelector(`div[data-row-number="${rowShiftNumber}"][data-position-number="${positionShiftNumber}"]`)
+        
+                    if(HTMLelement != null) {
+                        this.commonCellClickProcessing(HTMLelement, rowShiftNumber, positionShiftNumber)
+                    }
+                }
             }
         }
     }
