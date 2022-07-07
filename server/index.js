@@ -43,6 +43,7 @@ bot.on("inline_query", function (iq) {
 server.get("/highscore/:score", function (req, res, next) {
     if (!Object.hasOwnProperty.call(queries, req.query.id)) return next();
 
+    let score = req.params.score
     let query = queries[req.query.id]
     let options;
 
@@ -66,15 +67,15 @@ server.get("/highscore/:score", function (req, res, next) {
 
     bot.getGameHighScores(query.from.id, GetGameHighScoresOptionsObj)
         .then((scoreObj) => {
-            console.log('leader board: ' + JSON.stringify(scoreObj))
-            let highScore = scoreObj[0].score
-            let score = req.params.score
-
-            if (score < highScore) {
-                bot.setGameScore(query.from.id, parseInt(score), options);
-            }
+                console.log('leader board: ' + JSON.stringify(scoreObj))
+                let highScore = scoreObj[0].score
+    
+                if (score < highScore) {
+                    bot.setGameScore(query.from.id, parseInt(score), options);
+                }
         }).catch((err) => {
-            console.log('there is error: ' + err)
+            console.log('No high score setup')
+            bot.setGameScore(query.from.id, parseInt(score), options);
         })
 
 });

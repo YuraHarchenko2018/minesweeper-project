@@ -19,7 +19,7 @@ class Game {
         this.easyLevelState = {
             maxInRow: 9,
             maxInColumn: 9,
-            dangerousCellsAmount: 10, 
+            dangerousCellsAmount: 2, 
         }
         
         this.middleLevelState = {
@@ -345,7 +345,7 @@ class Game {
 
         let score = this.time
         let xhttp = new XMLHttpRequest()
-            xhttp.open("GET", `${location.hostname}/highscore/${score}?id=${id}`, true);
+            xhttp.open("GET", `/highscore/${score}?id=${id}`, true);
             xhttp.send();
     }
 
