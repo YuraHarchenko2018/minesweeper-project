@@ -338,6 +338,15 @@ class Game {
         Render.setContent(this.gameResultsTitle, `You win in ${this.time} seconds`)
         Render.setDisplayStatusForElement(this.gameResultsElement, 'block')
         this.gameResultsElement.style.background = "linear-gradient(-45deg, #234cd5, #23a6d5, #23a6d5, #23d5ab)"
+        
+        const queryString = location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const id = urlParams.get('id')
+
+        let score = this.time
+        let xhttp = new XMLHttpRequest()
+            xhttp.open("GET", `${location.hostname}/highscore/${score}?id=${id}`, true);
+            xhttp.send();
     }
 
     commonCellClickProcessing(target, cellRowNumber, cellPositionNumber) {
