@@ -45,24 +45,30 @@ server.get("/highscore/:score", function (req, res, next) {
 
     let score = req.params.score
     let query = queries[req.query.id]
-    let options;
+    let GetGameHighScoresOptionsObj
+    let options
+
 
     if (query.message) {
+        GetGameHighScoresOptionsObj = {
+            chat_id: query.message.chat.id,
+            message_id: query.message.message_id
+        }
+
         options = {
             chat_id: query.message.chat.id,
             message_id: query.message.message_id,
             force: true
         };
     } else {
+        GetGameHighScoresOptionsObj = {
+            inline_message_id: query.inline_message_id,
+        }
+
         options = {
             inline_message_id: query.inline_message_id,
             force: true
         };
-    }
-
-    let GetGameHighScoresOptionsObj = {
-        chat_id: query.message.chat.id,
-        message_id: query.message.message_id
     }
 
     bot.getGameHighScores(query.from.id, GetGameHighScoresOptionsObj)
