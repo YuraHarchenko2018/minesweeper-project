@@ -155,9 +155,11 @@ body {
 }
 #middleOption {
     background: linear-gradient(0deg, #e6bf50, #fffd95);
+    display: none;
 }
 #hardOption {
     background: linear-gradient(-25deg, #e73c7e, #ee7752);
+    display: none;
 }
 
 
