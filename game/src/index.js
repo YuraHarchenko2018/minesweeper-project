@@ -17,18 +17,21 @@ class Game {
         this.selectedLevelState = {}
         
         this.easyLevelState = {
+            levelName: 'easy',
             maxInRow: 9,
             maxInColumn: 9,
             dangerousCellsAmount: 10, 
         }
         
         this.middleLevelState = {
+            levelName: 'middle',
             maxInRow: 16,
             maxInColumn: 16,
             dangerousCellsAmount: 40, 
         }
         
         this.hardLevelState = {
+            levelName: 'hard',
             maxInRow: 30,
             maxInColumn: 16,
             dangerousCellsAmount: 99, 
@@ -93,7 +96,7 @@ class Game {
             this.completeState(this.selectedLevelState)
             this.time = 0
 
-            this.render()
+            this.render(this.selectedLevelState.levelName)
         }
     }
 
@@ -101,7 +104,7 @@ class Game {
         this.easyOptionBtn.onclick = (e) => {
             this.selectedLevelState = this.easyLevelState
             this.completeState(this.selectedLevelState)
-            this.initGame('easy')
+            this.initGame(this.selectedLevelState.levelName)
         }
     }
 
@@ -109,7 +112,7 @@ class Game {
         this.middleOptionBtn.onclick = (e) => {
             this.selectedLevelState = this.middleLevelState
             this.completeState(this.selectedLevelState)
-            this.initGame('middle')
+            this.initGame(this.selectedLevelState.levelName)
         }
     }
 
@@ -117,7 +120,7 @@ class Game {
         this.hardOptionBtn.onclick = (e) => {
             this.selectedLevelState = this.hardLevelState
             this.completeState(this.selectedLevelState)
-            this.initGame('hard')
+            this.initGame(this.selectedLevelState.levelName)
         }
     }
 
