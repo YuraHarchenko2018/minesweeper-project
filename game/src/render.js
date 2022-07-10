@@ -2,11 +2,32 @@ import Helper from './helper'
 
 
 class Render {
-    constructor() {
+    constructor(level = 'easy') {
         this.field = document.querySelector('.field')
-        this.baseWidthCell = 42
-
         this.cellsState = []
+        this.level = level
+
+        this.bordersWidth = 2
+
+        this.cellSizeMap = {
+            easy: {
+                width: 40,
+                height: 30,
+                fontSize: 20
+            },
+            middle: {
+                width: 35,
+                height: 25,
+                fontSize: 16
+            },
+            hard: {
+                width: 30,
+                height: 20,
+                fontSize: 14
+            }
+        }
+
+        this.baseWidthCell = this.cellSizeMap[this.level].width + this.bordersWidth
     }
 
     setUpGameFieldWidth(state) {
@@ -28,6 +49,10 @@ class Render {
                     cell.className = 'cell'
                     cell.dataset.rowNumber = j
                     cell.dataset.positionNumber = i
+
+                    cell.style.width = `${this.cellSizeMap[this.level].width}px`
+                    cell.style.height = `${this.cellSizeMap[this.level].height}px`
+                    cell.style.fontSize = `${this.cellSizeMap[this.level].fontSize}px`
 
                 this.field.appendChild(cell)
             }

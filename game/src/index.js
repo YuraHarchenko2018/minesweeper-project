@@ -101,7 +101,7 @@ class Game {
         this.easyOptionBtn.onclick = (e) => {
             this.selectedLevelState = this.easyLevelState
             this.completeState(this.selectedLevelState)
-            this.initGame()
+            this.initGame('easy')
         }
     }
 
@@ -109,7 +109,7 @@ class Game {
         this.middleOptionBtn.onclick = (e) => {
             this.selectedLevelState = this.middleLevelState
             this.completeState(this.selectedLevelState)
-            this.initGame()
+            this.initGame('middle')
         }
     }
 
@@ -117,7 +117,7 @@ class Game {
         this.hardOptionBtn.onclick = (e) => {
             this.selectedLevelState = this.hardLevelState
             this.completeState(this.selectedLevelState)
-            this.initGame()
+            this.initGame('hard')
         }
     }
 
@@ -126,16 +126,16 @@ class Game {
         this.state.cellsCount = this.state.maxInRow * this.state.maxInColumn
     }
 
-    initGame() {
+    initGame(level) {
         // first render
-        this.render()
+        this.render(level)
 
         // set handlers
         this.handleForGameStyle()
         this.handleCellsClick()
     }
 
-    render() {
+    render(level) {
         // hide other windows
         Render.setDisplayStatusForElement(this.difficultyWrapperElement, 'none')
         Render.setDisplayStatusForElement(this.gameResultsElement, 'none')
@@ -148,7 +148,7 @@ class Game {
         // clear cells
         Render.removeContent(this.fieldElement)
 
-        let RenderInstance = new Render()
+        let RenderInstance = new Render(level)
             RenderInstance.renderCells(this.state)
         
         this.state.amountOfBomb = this.state.dangerousCellsAmount
